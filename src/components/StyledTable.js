@@ -4,6 +4,11 @@ import { Translate } from "@material-ui/icons";
 export const useStyles = makeStyles((theme) => ({
 	container: {
 		width: "50%"
+	},
+	completedTask: {
+		textDecoration: "line-through",
+		backgroundColor: "#fbb",
+		color: "#555"
 	}
 }));
 export const StyledTableCell = withStyles((theme) => ({

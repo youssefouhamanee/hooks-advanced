@@ -19,7 +19,6 @@ function appReducer(state = initialState, action) {
 				newTask: action.payload.newTask
 			};
 		case "handle_new_task":
-			console.log(action.payload);
 			return {
 				...state,
 				newTask: action.payload

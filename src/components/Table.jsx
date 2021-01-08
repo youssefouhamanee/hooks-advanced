@@ -13,7 +13,6 @@ import { useStyles, StyledTableCell, StyledTableRow } from "./StyledTable";
 import ModalDeleteTask from "./ModalDeleteTask";
 
 const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
-	console.log(tasks);
 	const classes = useStyles();
 
 	return (
@@ -40,7 +39,13 @@ const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
 											}}
 										/>
 									</StyledTableCell>
-									<StyledTableCell>{s.text}</StyledTableCell>
+									<StyledTableCell>
+										{s.completed === false ? (
+											s.text
+										) : (
+											<del className={classes.completedTask}>{s.text}</del>
+										)}
+									</StyledTableCell>
 									<StyledTableCell>
 										<IconButton
 											onClick={() => {
