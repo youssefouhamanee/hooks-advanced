@@ -2,8 +2,11 @@ import React, { useReducer, createContext } from "react";
 const initialState = {
 	tasks: [{ id: "1", text: "add iamge", completed: false }],
 	newTask: "",
-	displayModalDelete: false,
-	taskId: ""
+	displayDeleteModal: false,
+	displayUpdateModal: false,
+	taskId: "",
+	task: {},
+	renameTask: ""
 };
 function appReducer(state = initialState, action) {
 	switch (action.type) {
@@ -51,6 +54,35 @@ function appReducer(state = initialState, action) {
 				...state,
 				tasks: state.tasks.filter((t) => t.id !== state.taskId)
 			};
+		case "open_modal_update":
+			return {
+				...state,
+				displayUpdateModal: action.payload
+			};
+		case "get_task_name":
+			return {
+				...state,
+				task: action.payload
+			};
+		case "rename_name_task":
+			return {
+				...state,
+				renameTask: action.payload
+			};
+		case "update_task":
+			return {
+				...state,
+				tasks: state.tasks.map((t) => {
+					if (t.id === state.task.id) {
+						return {
+							...t,
+							text: state.renameTask
+						};
+					}
+					return t;
+				})
+			};
+
 		default:
 			return state;
 	}

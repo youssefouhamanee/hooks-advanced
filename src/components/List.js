@@ -3,18 +3,22 @@ import { ListContext } from "./contextApp";
 import { Button, TextField, Typography } from "@material-ui/core";
 import TableList from "./Table";
 import { v4 as uuid } from "uuid";
+import { useEffechtOnce } from "./helpers";
 
 const List = () => {
 	const { state, dispatch } = useContext(ListContext);
 
-	useEffect(() => {
+	useEffechtOnce(() => {
 		const raw = localStorage.getItem("data");
 		dispatch({ type: "reset", payload: JSON.parse(raw) });
-	}, []);
+	});
+
 	useEffect(() => {
 		localStorage.setItem("data", JSON.stringify(state.tasks));
 	}, [state]);
+
 	const totalTasksCompleted = state.tasks.filter((t) => t.completed !== false);
+
 	return (
 		<>
 			<div
@@ -62,6 +66,8 @@ const List = () => {
 				tasks={state?.tasks}
 				dispatch={dispatch}
 				displayDeleteModal={state?.displayDeleteModal}
+				displayUpdateModal={state?.displayUpdateModal}
+				nameTask={state.task.text}
 			/>
 		</>
 	);

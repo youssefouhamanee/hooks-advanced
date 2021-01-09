@@ -46,5 +46,11 @@ export const classesModal = makeStyles((theme) => ({
 		"& > *": {
 			marginRight: theme.spacing(1)
 		}
+	},
+	contentUpdate: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "space-between",
+		height: "120px"
 	}
 }));

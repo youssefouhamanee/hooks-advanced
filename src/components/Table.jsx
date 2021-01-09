@@ -9,10 +9,18 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 import { useStyles, StyledTableCell, StyledTableRow } from "./StyledTable";
 import ModalDeleteTask from "./ModalDeleteTask";
+import ModalUpdateTask from "./ModalUpdateTask";
 
-const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
+const TableList = ({
+	tasks,
+	dispatch,
+	displayDeleteModal,
+	displayUpdateModal,
+	nameTask
+}) => {
 	const classes = useStyles();
 
 	return (
@@ -23,6 +31,7 @@ const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
 						<TableRow>
 							<StyledTableCell>completed</StyledTableCell>
 							<StyledTableCell>name</StyledTableCell>
+							<StyledTableCell></StyledTableCell>
 							<StyledTableCell></StyledTableCell>
 						</TableRow>
 					</TableHead>
@@ -56,6 +65,16 @@ const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
 											<DeleteIcon />
 										</IconButton>
 									</StyledTableCell>
+									<StyledTableCell>
+										<IconButton
+											onClick={() => {
+												dispatch({ type: "get_task_name", payload: { ...s } });
+												dispatch({ type: "open_modal_update", payload: true });
+											}}
+										>
+											<EditIcon />
+										</IconButton>
+									</StyledTableCell>
 								</StyledTableRow>
 							);
 						})}
@@ -65,6 +84,13 @@ const TableList = ({ tasks, dispatch, displayDeleteModal }) => {
 					open={displayDeleteModal}
 					close={() => dispatch({ type: "open_modal", payload: false })}
 					deleteTask={() => dispatch({ type: "delete_task" })}
+				/>
+				<ModalUpdateTask
+					open={displayUpdateModal}
+					close={() => dispatch({ type: "open_modal_update", payload: false })}
+					updateTask={() => dispatch({ type: "update_task" })}
+					value={nameTask}
+					dispatch={dispatch}
 				/>
 			</Paper>
 		</>
