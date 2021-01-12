@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { ListContext } from "./contextApp";
-import { Button, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import TableList from "./Table";
+import { BtnAdd } from "./StyledTable";
 import { v4 as uuid } from "uuid";
 import { useEffechtOnce } from "./helpers";
 
@@ -18,7 +19,26 @@ const List = () => {
 	}, [state]);
 
 	const totalTasksCompleted = state.tasks.filter((t) => t.completed !== false);
-
+	const validateForm = () => {
+		if (state.newTask === "" || state.newTask.trim() === "") {
+			return dispatch({
+				type: "get_errors_form",
+				payload: { task: "please this filed not should be empty" }
+			});
+		} else {
+			dispatch({
+				type: "add",
+				payload: {
+					task: { id: uuid(), text: state.newTask, completed: false },
+					newTask: ""
+				}
+			});
+			dispatch({
+				type: "get_errors_form",
+				payload: { task: "" }
+			});
+		}
+	};
 	return (
 		<>
 			<div
@@ -29,29 +49,18 @@ const List = () => {
 				}}
 			>
 				<TextField
+					error={state.errors?.task}
 					id="standard-basic"
 					label="Name of task"
-					onChange={(e) =>
-						dispatch({ type: "handle_new_task", payload: e.target.value })
-					}
+					name="task-input"
+					onChange={(e) => {
+						dispatch({ type: "handle_new_task", payload: e.target.value });
+					}}
 					value={state.newTask}
+					helperText={state.errors?.task}
 				/>
 
-				<Button
-					variant="outlined"
-					color="primary"
-					onClick={() =>
-						dispatch({
-							type: "add",
-							payload: {
-								task: { id: uuid(), text: state.newTask, completed: false },
-								newTask: ""
-							}
-						})
-					}
-				>
-					ADD TASK
-				</Button>
+				<BtnAdd onClick={() => validateForm()}>ADD TASK</BtnAdd>
 			</div>
 
 			<br />

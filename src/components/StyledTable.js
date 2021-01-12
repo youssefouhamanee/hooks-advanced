@@ -1,5 +1,5 @@
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { TableRow, TableCell } from "@material-ui/core";
+import { TableRow, TableCell, Button } from "@material-ui/core";
 import { Translate } from "@material-ui/icons";
 export const useStyles = makeStyles((theme) => ({
 	container: {
@@ -29,7 +29,15 @@ export const StyledTableRow = withStyles((theme) => ({
 		}
 	}
 }))(TableRow);
-
+export const BtnAdd = withStyles((theme) => ({
+	root: {
+		maxHeight: "50px",
+		color: "blue",
+		border: "1px solid blue",
+		borderRadius: "4px",
+		height: "50px"
+	}
+}))(Button);
 export const classesModal = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",

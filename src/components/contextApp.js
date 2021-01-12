@@ -6,7 +6,8 @@ const initialState = {
 	displayUpdateModal: false,
 	taskId: "",
 	task: {},
-	renameTask: ""
+	renameTask: "",
+	errors: {}
 };
 function appReducer(state = initialState, action) {
 	switch (action.type) {
@@ -81,6 +82,12 @@ function appReducer(state = initialState, action) {
 					}
 					return t;
 				})
+			};
+		case "get_errors_form":
+			console.log(action.payload);
+			return {
+				...state,
+				errors: action.payload
 			};
 
 		default:
